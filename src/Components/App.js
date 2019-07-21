@@ -24,7 +24,7 @@ class App extends React.Component {
           id
           title
           body {
-            data
+            datas
           }
           img {
             original_url
@@ -69,7 +69,7 @@ class App extends React.Component {
 
     if (error) {
       console.log(error.response)
-      return <div>{error.message}</div>
+      return <div id="error" >{error.message}</div>
     } else if (!isLoaded) {
       return (
         <div id="loader" >
