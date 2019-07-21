@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/App.css';
 import ArticlesList from './ArticlesList';
 import axios from 'axios';
+import Loader from 'react-loader-spinner';
 
 
 class App extends React.Component {
@@ -70,7 +71,17 @@ class App extends React.Component {
       console.log(error.response)
       return <div>{error.message}</div>
     } else if (!isLoaded) {
-      return <div>Loading...</div>
+      return (
+        <div id="loader" >
+          <Loader
+            type="CradleLoader"
+            color="#00BFFF"
+            height="100"
+            width="100"
+          />
+        </div>
+      )
+
     } else {
       return (
         <div className="App">
@@ -80,7 +91,7 @@ class App extends React.Component {
             currentID={this.state.currentID}
             isArticleOpen={this.state.isArticleOpen}
           />
-          <button onClick={this.getMore}>Załaduj kolejne 10 artykułów</button>
+          <button id="getMore" onClick={this.getMore}>Załaduj kolejne 10 artykułów</button>
         </div>
       );
     }

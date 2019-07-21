@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Article.css';
 import ReactHtmlParser from 'react-html-parser';
+import { Transition } from "react-spring/renderprops";
 
 class Article extends React.Component {
 
@@ -10,7 +11,6 @@ class Article extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.currentID &&
       prevProps.currentID !== this.props.currentID &&
       this.props.id !== this.props.currentID
     ) {
@@ -23,6 +23,7 @@ class Article extends React.Component {
     this.props.showArticle(this.props.id)
   }
 
+
   render() {
     const { title, body, img, alt } = this.props;
 
@@ -30,9 +31,21 @@ class Article extends React.Component {
 
     return (
       <div className="article">
-        <h1 onClick={this.toggle}>{title}</h1>
-        {/* <img src={img} alt={alt} /> */}
-        {this.state.isOpen && articleBody}
+        <h1 className="title" onClick={() => {
+          this.toggle();
+        }}>{title}</h1>
+
+        <Transition
+          items={this.state.isOpen}
+          config={{ duration: 300 }}
+          from={{ height: 0, overflow: "hidden" }}
+          enter={[{ height: "auto", overflow: "auto" }]}
+          leave={{ height: 0, overflow: "hidden" }}
+        >
+          {isOpen =>
+            isOpen && (props => <div style={props} className="content"><img className="articleImg" src={img} alt={alt} />{articleBody}</div>)
+          }
+        </Transition>
       </div>
     );
   }

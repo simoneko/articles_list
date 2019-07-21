@@ -7,12 +7,15 @@
     "axios": "^0.19.0",
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
+    "react-animate-height": "^2.0.15",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.8.6",
     "react-html-parser": "^2.0.2",
+    "react-loader-spinner": "^2.3.0",
     "react-motion": "^0.5.2",
     "react-scripts": "3.0.1",
     "react-scroll-to-component": "^1.0.2",
+    "react-spring": "^8.0.27",
     "scroll-to-element": "^2.0.3"
   },
   "scripts": {
