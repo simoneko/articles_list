@@ -1,0 +1,19 @@
+#off {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px;
+  border: 1px solid black;
+  font-size: 24px;
+}
+
+@media(max-width: 900px) {
+  #off {
+    width: 100%;
+    font-size: 20px;
+  }
+}

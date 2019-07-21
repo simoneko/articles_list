@@ -3,6 +3,8 @@ import '../styles/App.css';
 import ArticlesList from './ArticlesList';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
+import { Offline, Online } from "react-detect-offline";
+import Off from './Off';
 
 
 class App extends React.Component {
@@ -24,7 +26,7 @@ class App extends React.Component {
           id
           title
           body {
-            datas
+            data
           }
           img {
             original_url
@@ -45,6 +47,7 @@ class App extends React.Component {
       }))
 
     } catch (error) {
+      console.log(error);
       this.setState(() => ({ error }))
     }
   }
@@ -68,8 +71,12 @@ class App extends React.Component {
     const { error, isLoaded, list } = this.state;
 
     if (error) {
-      console.log(error.response)
-      return <div id="error" >{error.message}</div>
+      return (
+        <div>
+          <Online><div id="error" >{error.message}</div></Online>
+          <Offline ><Off /></Offline>
+        </div>
+      )
     } else if (!isLoaded) {
       return (
         <div id="loader" >
