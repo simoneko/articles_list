@@ -7,30 +7,32 @@ import axios from 'axios';
 class App extends React.Component {
 
   state = {
-    articles: [
-      {
-        id: 1,
-        title: "Article 1",
-        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, consequatur."
-      },
-      {
-        id: 2,
-        title: "Article 2",
-        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, consequatur."
-      },
-      {
-        id: 3,
-        title: "Article 3",
-        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, consequatur."
-      }
-    ],
     list: [],
     error: null,
     isLoaded: false,
-    open: ''
+    currentID: '',
+    isArticleOpen: false,
+    offset: 0
   }
 
-  getArticles = async (query) => {
+  getArticles = async (offset) => {
+    const query =
+      `
+      {
+        articles(t: Article, limit: 10, offset: ${offset}) {
+          id
+          title
+          body {
+            data
+          }
+          img {
+            original_url
+            description
+          }
+        }
+      }
+    `;
+
     try {
       const response = await axios.post('https://mobileapi.wp.pl/v1/graphql', {
         query
@@ -38,7 +40,7 @@ class App extends React.Component {
 
       this.setState(({
         isLoaded: true,
-        list: response.data.data.articles
+        list: [...this.state.list, ...response.data.data.articles],
       }))
 
     } catch (error) {
@@ -46,32 +48,24 @@ class App extends React.Component {
     }
   }
 
+  showArticle = (newID) => {
+    this.setState({
+      currentID: newID,
+    })
+  }
 
+  getMore = () => {
+    this.getArticles(this.state.offset + 10);
+    this.setState({ offset: this.state.offset + 10 })
+  }
 
   componentDidMount() {
-
-    const query =
-      `
-        {
-          articles(t: Article, limit: 10) {
-            id
-            title
-            body {
-              data
-            }
-          }
-        }
-      `;
-
-    this.getArticles(query);
-
-
-
+    this.getArticles(0);
   }
 
   render() {
-
     const { error, isLoaded, list } = this.state;
+
     if (error) {
       console.log(error.response)
       return <div>{error.message}</div>
@@ -80,10 +74,13 @@ class App extends React.Component {
     } else {
       return (
         <div className="App">
-          <ArticlesList list={list} />
-
-          {console.log(list)}
-
+          <ArticlesList
+            list={list}
+            showArticle={this.showArticle}
+            currentID={this.state.currentID}
+            isArticleOpen={this.state.isArticleOpen}
+          />
+          <button onClick={this.getMore}>Załaduj kolejne 10 artykułów</button>
         </div>
       );
     }

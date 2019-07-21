@@ -1,37 +1,38 @@
 import React from 'react';
 import '../styles/Article.css';
 import ReactHtmlParser from 'react-html-parser';
-import { Collapse } from 'react-collapse';
 
 class Article extends React.Component {
 
   state = {
-    id: this.props.id,
-    title: this.props.title,
-    body: this.props.body,
-    isOpened: false
+    isOpen: false
   }
 
-  showArticle = () => {
-    this.setState({
-      isOpened: !this.state.isOpened
-    })
-
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.currentID &&
+      prevProps.currentID !== this.props.currentID &&
+      this.props.id !== this.props.currentID
+    ) {
+      this.setState({ isOpen: false });
+    }
   }
 
+  toggle = () => {
+    this.setState({ isOpen: !this.state.isOpen })
+    this.props.showArticle(this.props.id)
+  }
 
   render() {
-
-    const { title, body, isOpened } = this.state;
-
+    const { title, body, img, alt } = this.props;
 
     const articleBody = body.map(p => { return ReactHtmlParser(p.data) })
+
     return (
       <div className="article">
-        <h1 onClick={() => this.showArticle()} >{title}</h1>
-        <Collapse isOpened={isOpened} >
-          {articleBody}
-        </Collapse>
+        <h1 onClick={this.toggle}>{title}</h1>
+        {/* <img src={img} alt={alt} /> */}
+        {this.state.isOpen && articleBody}
       </div>
     );
   }
