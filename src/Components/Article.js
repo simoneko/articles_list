@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/Article.css';
 import ReactHtmlParser from 'react-html-parser';
 import { Transition } from "react-spring/renderprops";
+import '../styles/Article.css';
 
 class Article extends React.Component {
 

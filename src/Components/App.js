@@ -1,11 +1,10 @@
 import React from 'react';
-import '../styles/App.css';
 import ArticlesList from './ArticlesList';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import { Offline, Online } from "react-detect-offline";
 import Off from './Off';
-
+import '../styles/App.css';
 
 class App extends React.Component {
 
