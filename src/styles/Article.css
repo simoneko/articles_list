@@ -1,7 +1,6 @@
 .article {
   background-color: #ddd;
   border: 1px solid black;
-  
 }
 
 .title{
@@ -11,8 +10,6 @@
   padding: 10px 10px;
   transition-duration: .3s;
 }
-
-
 
 .content {
   padding: 10px 18px;

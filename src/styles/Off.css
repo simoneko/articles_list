@@ -1,5 +1,5 @@
 #off {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -11,9 +11,15 @@
   font-size: 24px;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 900px) and (min-width: 701px) {
+  #off {
+    font-size: 18px;
+  }
+}
+
+@media(max-width: 700px) {
   #off {
     width: 100%;
-    font-size: 20px;
+    font-size: 14px;
   }
 }

@@ -1,9 +1,11 @@
 import React from 'react';
-import ArticlesList from './ArticlesList';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import { Offline, Online } from "react-detect-offline";
+
+import ArticlesList from './ArticlesList';
 import Off from './Off';
+
 import '../styles/App.css';
 
 class App extends React.Component {
@@ -13,7 +15,6 @@ class App extends React.Component {
     error: null,
     isLoaded: false,
     currentID: '',
-    isArticleOpen: false,
     offset: 0
   }
 
@@ -46,8 +47,10 @@ class App extends React.Component {
       }))
 
     } catch (error) {
-      console.log(error);
-      this.setState(() => ({ error }))
+      this.setState(() => ({ error, isLoaded: true }))
+      setTimeout(() => {
+        this.setState({ error: null })
+      }, 8000);
     }
   }
 
@@ -69,14 +72,7 @@ class App extends React.Component {
   render() {
     const { error, isLoaded, list } = this.state;
 
-    if (error) {
-      return (
-        <div>
-          <Online><div id="error" >{error.message}</div></Online>
-          <Offline ><Off /></Offline>
-        </div>
-      )
-    } else if (!isLoaded) {
+    if (!isLoaded) {
       return (
         <div id="loader" >
           <Loader
@@ -87,17 +83,19 @@ class App extends React.Component {
           />
         </div>
       )
-
     } else {
       return (
         <div className="App">
+          {error && <div>
+            <Online><div id="error" >{error.message}</div></Online>
+            <Offline ><Off /></Offline>
+          </div>}
           <ArticlesList
             list={list}
             showArticle={this.showArticle}
             currentID={this.state.currentID}
-            isArticleOpen={this.state.isArticleOpen}
           />
-          <button id="getMore" onClick={this.getMore}>Załaduj kolejne 10 artykułów</button>
+          <button id="getMore" onClick={this.getMore}>{list.length ? "Załaduj kolejne 10 artykułów" : "Załaduj artykuły"}</button>
         </div>
       );
     }

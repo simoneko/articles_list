@@ -34,12 +34,10 @@
 
 #getMore:focus {
   outline:0;
-
 }
 
 @media(min-width: 901px) {
   #getMore:hover {
-
     box-shadow: 2px 3px 13px 2px rgba(0,0,0,0.7);
     background-color: #000;
     color: white;
@@ -49,7 +47,6 @@
 
 @media(max-width: 900px) {
   #getMore:active {
-
     box-shadow: 2px 3px 13px 2px rgba(0,0,0,0.7);
     background-color: #000;
     color: white;
