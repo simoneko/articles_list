@@ -12,9 +12,7 @@
   transition-duration: .3s;
 }
 
-.title:hover {
-  background-color: #ccc
-}
+
 
 .content {
   padding: 10px 18px;
@@ -48,5 +46,15 @@ ul {
 
   .title {
     font-size: 24px;
+  }
+
+  .title:active {
+    background-color: #ccc
+  }
+}
+
+@media(min-width:901px) {
+  .title:hover {
+    background-color: #ccc
   }
 }
